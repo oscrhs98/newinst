@@ -6,6 +6,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 import platform 
 import os
+import argparse
+from time import sleep
 #---------------------LOGGER--------------------------------#
 import logging
 import logging.config
@@ -15,7 +17,13 @@ logging.config.fileConfig('logging.conf')
 logger = logging.getLogger('root')
 
 class  startChrome():
-    def __init__(self):
+    """
+        Inicializa una ventana de chrome, inicia sesión y quita cualquier
+        pop-up que aparezca
+
+        Sin argumentos
+    """
+    def __init__(self, username, password, args):
         super().__init__()
         #Open chrome
         if(platform.system() == 'Windows'):
@@ -29,11 +37,28 @@ class  startChrome():
         #Access information
         self.driver.maximize_window()
         self.driver.get("https://instagram.com")
-        self.username = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.NAME, 'username'))).send_keys('photoandtravel2020')
-        self.password = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.NAME, 'password'))).send_keys('mannheimzittau' + Keys.ENTER)
+        self.username = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.NAME, 'username'))).send_keys(username)
+        self.password = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.NAME, 'password'))).send_keys(password + Keys.ENTER)
         logger.info("Access Granted")
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//img[contains(@alt, 'Instagram')]"))).click()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[4]//button[2][@tabindex=\"0\"]"))).click()
 
 
-Bot = startChrome()
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-a", "--account", help="Account to run (m for MexicanTest, d for GermanyTest, Account name for other)")
+    parser.add_argument("-p", "--password", help="Password to account", default= None)
+    #parser.add_argument("-d", "--drive", help="Will drive download Info", default=False, action="store_true")
+
+    args = parser.parse_args()
+
+    if (args.account == "m"):
+        Bot = startChrome('photoandtravel2020','mannheimzittau', args)
+    
+    elif (args.account == "d"):
+        Bot = startChrome('travelandphoto2020','mannheimzittau', args) 
+    sleep(1000)
+
+
+if __name__ == "__main__":
+    main()
