@@ -21,7 +21,7 @@ class  startChrome():
         Inicializa una ventana de chrome, inicia sesión y quita cualquier
         pop-up que aparezca
 
-        Sin argumentos
+        Recibe Username, password y args
     """
     def __init__(self, username, password, args):
         super().__init__()
@@ -56,7 +56,14 @@ def main():
         Bot = startChrome('photoandtravel2020','mannheimzittau', args)
     
     elif (args.account == "d"):
-        Bot = startChrome('travelandphoto2020','mannheimzittau', args) 
+        Bot = startChrome('travelandphoto2020','mannheimzittau', args)
+    else:
+        account = args.account
+        password = args.password
+        print("You entered: " + account)
+        print("You entered: " + password)
+        sleep(2)
+        Bot = startChrome(account,password, args)
     sleep(1000)
 
 
