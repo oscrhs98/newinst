@@ -11,13 +11,13 @@ class  startChrome():
     def __init__(self):
         super().__init__()
         #Open chrome
-        path_driver = os.path.dirname(os.path.realpath(__file__))
+        #path_driver = os.path.dirname(os.path.realpath(__file__))
         if(platform.system() == 'Windows'):
-            self.driver = webdriver.Chrome(path_driver + "\chromedriver\chromedriver.exe" )
+            self.driver = webdriver.Chrome("./chrome/chromedriver.exe" )
         elif(platform.system()== 'Linux'):
             self.driver = webdriver.Chrome()
         else:
-            self.driver = webdriver.Chrome(path_driver + "/chromedriver/chromedriver")
+            self.driver = webdriver.Chrome("./chrome/chromedriver")
 
         self.driver.get("https://instagram.com")
         self.username = 'photoandtravel2020'
