@@ -15,7 +15,7 @@ class  startChrome():
         if(platform.system() == 'Windows'):
             self.driver = webdriver.Chrome(path_driver + "\chromedriver\chromedriver.exe" )
         elif(platform.system()== 'Linux'):
-            self.driver = webdriver.Chrome(path_driver + "/chromedriver/chromedriver")
+            self.driver = webdriver.Chrome()
         else:
             self.driver = webdriver.Chrome(path_driver + "/chromedriver/chromedriver")
 
