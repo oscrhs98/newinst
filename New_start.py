@@ -3,11 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.action_chains import ActionChains
-import platform 
-import os
-import argparse
-from time import sleep
+import platform
 #---------------------LOGGER--------------------------------#
 import logging
 import logging.config
@@ -42,30 +38,3 @@ class  startChrome():
         logger.info("Access Granted")
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//img[contains(@alt, 'Instagram')]"))).click()
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[4]//button[2][@tabindex=\"0\"]"))).click()
-
-
-def main():
-    parser = argparse.ArgumentParser()
-    parser.add_argument("-a", "--account", help="Account to run (m for MexicanTest, d for GermanyTest, Account name for other)")
-    parser.add_argument("-p", "--password", help="Password to account", default= None)
-    #parser.add_argument("-d", "--drive", help="Will drive download Info", default=False, action="store_true")
-
-    args = parser.parse_args()
-
-    if (args.account == "m"):
-        Bot = startChrome('photoandtravel2020','mannheimzittau', args)
-    
-    elif (args.account == "d"):
-        Bot = startChrome('travelandphoto2020','mannheimzittau', args)
-    else:
-        account = args.account
-        password = args.password
-        print("You entered: " + account)
-        print("You entered: " + password)
-        sleep(2)
-        Bot = startChrome(account,password, args)
-    sleep(1000)
-
-
-if __name__ == "__main__":
-    main()
