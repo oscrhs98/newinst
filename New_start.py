@@ -6,7 +6,6 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.action_chains import ActionChains
 import platform 
 import os
-
 #---------------------LOGGER--------------------------------#
 import logging
 import logging.config
@@ -19,22 +18,22 @@ class  startChrome():
     def __init__(self):
         super().__init__()
         #Open chrome
-        #path_driver = os.path.dirname(os.path.realpath(__file__))
         if(platform.system() == 'Windows'):
             self.driver = webdriver.Chrome("./chrome/chromedriver.exe" )
         elif(platform.system()== 'Linux'):
             self.driver = webdriver.Chrome()
         else:
             self.driver = webdriver.Chrome("./chrome/chromedriver")
-        logger.warning("This code was excecuted from {}".format(platform.system()))
+        logger.warning("This code was executed from {}".format(platform.system()))
 
+        #Access information
+        self.driver.maximize_window()
         self.driver.get("https://instagram.com")
-        self.username = 'photoandtravel2020'
-        self.password = 'mannheimzittau'
-        self.user = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.NAME, 'username'))).send_keys(self.username)
-        self.pas = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.NAME, 'password'))).send_keys(self.password + Keys.ENTER)
-        logger.info("Acces Granted")
+        self.username = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.NAME, 'username'))).send_keys('photoandtravel2020')
+        self.password = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.NAME, 'password'))).send_keys('mannheimzittau' + Keys.ENTER)
+        logger.info("Access Granted")
         WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//img[contains(@alt, 'Instagram')]"))).click()
+        WebDriverWait(self.driver, 10).until(EC.presence_of_element_located((By.XPATH, "//div[4]//button[2][@tabindex=\"0\"]"))).click()
 
 
 Bot = startChrome()
